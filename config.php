@@ -12,6 +12,6 @@ function redirect($page) {
 	exit();
 } 
 
-
+error_reporting(0);
 
 ?>

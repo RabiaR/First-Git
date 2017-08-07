@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,8 +10,11 @@
         <link href="css/bootstrap.css" rel="stylesheet"> 
         <!-- Custom CSS -->
         <link href="css/custom.css" rel="stylesheet">  
-        <!-- Include JQuery -->
-        <script src="js/jquery.js"></script>
+        
+<script
+  src="http://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
         <!-- Bootstrap main javascript -->
         <script src="js/bootstrap.js"></script>
 
@@ -24,10 +30,24 @@
     <?php
 // Include required MySQL confiquration file and fuctions
 require_once('config.php');
-if (isset($_POST['logout'])) {
-    session_destroy();
+
+$CheckSession = $_SESSION["userSession"] ;
+if ($CheckSession !== null) {
+    echo "<script>
+$(document).ready(function(){
+    
+        $('#loginbtns').hide();
+        $('#hidebtns').css('visibility', 'visible');
+        });
+</script>";
+    
 }
-// Start session 
+
+if (isset($_POST['logout'])) {
+unset($_SESSION['userSession']);
+ session_destroy();
+ redirect('index.php');
+}
 ?>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <nav class="top-bar"></nav>
@@ -51,17 +71,26 @@ if (isset($_POST['logout'])) {
                         <li><a href="about.php">About</a></li>
                         <li><a href="Mission.php">Mission Statement</a></li>
                         <li class="dropdown">
-                          <a href="innovate.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User's List <span class="caret"></span></a>
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User's List <span class="caret"></span></a>
                           <ul class="dropdown-menu">
                             <li><a href="donors.php">Donors</a></li>
                             <li><a href="seekers.php">Seekers</a></li>                             
                         </ul>                        
                         </li>                        
                       </ul>
-                      <ul class="nav navbar-nav navbar-right">                            
-                          <li class="login" ><a href="login.php">Login</a></li>
-                          <li class="register"><a href="registraion.php">Register</a></li>                     
-                      </ul>
+                      <div id="loginbtns" style="float: right; margin-top: 10px;">
+                        <div class="form-group">
+                            <a href="login.php"><button type="button" placeholder="Login" class="form-control btn-primary">Log In</button></a>
+                        </div>
+                        <div>
+                            <a href="registration.php"><button type="button" placeholder="Sign Up" class="form-control" >Sign Up</button></a>
+                        </div>
+                         </div>
+                    <form class="navbar-form navbar-right" id="hidebtns" style="visibility: hidden;" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <div class="form-group">
+                            <button type="submit" placeholder="Log out" name="logout" class="form-control btn-primary">Log Out</button>
+                        </div>
+                    </form>
                     </div>
                 </div>
         </nav>

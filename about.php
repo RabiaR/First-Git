@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,9 +21,35 @@
 
         <!-- Bootstrap JavaScript -->
         <script src="js/bootstrap.js"></script>
+        <script
+  src="http://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
     </head>
 
     <body>
+    <?php
+// Include required MySQL confiquration file and fuctions
+require_once('config.php');
+
+$CheckSession = $_SESSION["userSession"] ;
+if ($CheckSession !== null) {
+    echo "<script>
+$(document).ready(function(){
+    
+        $('#loginbtns').hide();
+        $('#hidebtns').css('visibility', 'visible');
+        });
+</script>";
+    
+}
+
+if (isset($_POST['logout'])) {
+unset($_SESSION['userSession']);
+ session_destroy();
+ redirect('index.php');
+}
+?>
          <nav class="navbar navbar-inverse navbar-fixed-top">
             <nav class="top-bar"></nav>
                 <div class="container-fluid">
@@ -39,22 +68,31 @@
 
               <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="index.php"> Home <span class="sr-only">(current)</span></a></li>
-                            <li><a href="about.php">About</a></li>
-                            <li><a href="Mission.php">Mission Statement</a></li>
-                            <li class="dropdown">
-                              <a href="innovate.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User's List <span class="caret"></span></a>
-	                            <ul class="dropdown-menu">
-	                                <li><a href="donors.php">Donors</a></li>
-	                                <li><a href="seekers.php">Seekers</a></li>                              
-	                            </ul>                            
-                            </li>                            
-                        </ul>
-                        <ul class="nav navbar-nav navbar-right">                            
-                              <li class="login" ><a href="login.php">Login</a></li>
-                              <li class="register"><a href="registraion.php">Register</a></li>                      
-                        </ul>
+                      <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.php">Home<span class="sr-only">(current)</span></a></li>
+                        <li><a href="about.php">About</a></li>
+                        <li><a href="Mission.php">Mission Statement</a></li>
+                        <li class="dropdown">
+                          <a href="innovate.php" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User's List <span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="donors.php">Donors</a></li>
+                            <li><a href="seekers.php">Seekers</a></li>                             
+                        </ul>                        
+                        </li>                        
+                      </ul>
+                      <div id="loginbtns" style="float: right; margin-top: 10px;">
+                        <div class="form-group">
+                            <a href="login.php"><button type="button" placeholder="Login" class="form-control btn-primary">Log In</button></a>
+                        </div>
+                        <div>
+                            <a href="registration.php"><button type="button" placeholder="Sign Up" class="form-control" >Sign Up</button></a>
+                        </div>
+                         </div>
+                    <form class="navbar-form navbar-right" id="hidebtns" style="visibility: hidden;" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <div class="form-group">
+                            <button type="submit" placeholder="Log out" name="logout" class="form-control btn-primary">Log Out</button>
+                        </div>
+                    </form>
                     </div>
                 </div>
         </nav>
@@ -104,7 +142,6 @@
                             <p class="list-group-item-text">The nature of antigens present in the serum determines the blood type. AB negative suggests that an individual has both the antigens A and B. Individuals who are AB blood group are commonly called universal plasma donors because their plasma can be transfused to any person of whatever blood group. The blood type is also the rarest blood types among all the blood group because it is present in only 1 out of 167 individuals. This means an approximately 0.6% of the population has an AB negative blood. Not all of the ethnic groups share the same proportions of the AB negative blood type though. This blood type is present in about 1% in Caucasians, 0.3% in African American, 0.2% in Hispanic, and 0.1% in Asian. </p>
                         </a>
                     </div>
-                    |<div>This is for check</div>
                 </div>           
                 </div><!-- /. col-md-4 -->           
             </div> <!-- /row -->  
