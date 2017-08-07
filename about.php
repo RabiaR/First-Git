@@ -104,6 +104,7 @@
                             <p class="list-group-item-text">The nature of antigens present in the serum determines the blood type. AB negative suggests that an individual has both the antigens A and B. Individuals who are AB blood group are commonly called universal plasma donors because their plasma can be transfused to any person of whatever blood group. The blood type is also the rarest blood types among all the blood group because it is present in only 1 out of 167 individuals. This means an approximately 0.6% of the population has an AB negative blood. Not all of the ethnic groups share the same proportions of the AB negative blood type though. This blood type is present in about 1% in Caucasians, 0.3% in African American, 0.2% in Hispanic, and 0.1% in Asian. </p>
                         </a>
                     </div>
+                    |<div>This is for check</div>
                 </div>           
                 </div><!-- /. col-md-4 -->           
             </div> <!-- /row -->  
