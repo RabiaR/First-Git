@@ -101,12 +101,15 @@ unset($_SESSION['userSession']);
                 <div class="inner-page col-md-12">
                     <div id="blog" class="well">
                     <h1>Donor's List</h1>
-                        <table id='table'  class='table table-hover table-mc-light-blue'>
+                       <table id='table'  class='table table-hover table-mc-light-blue'>
       <thead>
       
         <tr>
+          <th>Reg. No.</th>
           <th>Name</th>
           <th>Blood Group</th>
+          <th>Phone</th>
+          <th>Email</th>
           <th>City</th>
         </tr>
       </thead>
@@ -114,10 +117,10 @@ unset($_SESSION['userSession']);
 
       <tbody>
 
-    <?php
+  <?php
 // Include required MySQL confiquration file and fuctions
 require_once('config.php');
-
+if ($CheckSession !== null) {
 $mysqli = @new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
             // Check connection
             if (mysqli_connect_errno()) {
@@ -126,15 +129,45 @@ $mysqli = @new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
               exit();
               }
           // Create connection
-          $result = mysqli_query($mysqli,"SELECT * FROM donors where approval = 1");
+          $result = mysqli_query($mysqli,"SELECT * FROM donors WHERE approval = 1");
           while($row = mysqli_fetch_array($result)){
             echo "<tr>";
+            echo "<td>" . $row['id'] . "</td>";
             echo "<td>" . $row['name'] . "</td>";
             echo "<td>" . $row['bloodGroup'] . "</td>";
-            echo "<td>" . $row['city'] . "</td>";           
+            echo "<td>" . $row['phone'] . "</td>";
+            echo "<td>" . $row['email'] . "</td>";
+            echo "<td>" . $row['city'] . "</td>";
             echo "</tr>";
-          }         
+          }
+          
+          
           mysqli_close($mysqli);
+        }
+        else{
+          $mysqli = @new mysqli(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+            // Check connection
+            if (mysqli_connect_errno()) {
+              printf("Unable to connect to database: %s",
+                mysqli_connect_error());
+              exit();
+              }
+          // Create connection
+          $result = mysqli_query($mysqli,"SELECT * FROM donors WHERE approval = 1");
+          while($row = mysqli_fetch_array($result)){
+            echo "<tr>";
+            echo "<td>" . $row['id'] . "</td>";
+            echo "<td>" . $row['name'] . "</td>";
+            echo "<td>" . $row['bloodGroup'] . "</td>";
+            echo "<td>Login to See</td>";
+            echo "<td>" . $row['email'] . "</td>";
+            echo "<td>" . $row['city'] . "</td>";
+            echo "</tr>";
+          }
+          
+          
+          mysqli_close($mysqli);
+        }
 ?>
       
             </tbody>
